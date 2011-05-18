@@ -95,9 +95,11 @@ public class wInit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-          LogiqueHongrois logique = new LogiqueHongrois(Integer.valueOf((String)jSpinner1.getValue()));
+          // LogiqueHongrois logique = new LogiqueHongrois(Integer.valueOf((String)jSpinner1.getValue()));
           this.dispose();
-          //wSaisi();
+          String sValue = jSpinner1.getValue().toString();
+          int dimensions = Integer.parseInt(sValue); 
+          wSaisi wsaisi = new wSaisi(dimensions);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
