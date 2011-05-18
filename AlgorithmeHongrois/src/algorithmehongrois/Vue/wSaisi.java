@@ -12,6 +12,7 @@
 package algorithmehongrois.Vue;
 
 import algorithmehongrois.Controleur.LogiqueHongrois;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -20,8 +21,22 @@ import algorithmehongrois.Controleur.LogiqueHongrois;
 public class wSaisi extends javax.swing.JFrame {
 
     /** Creates new form wSaisi */
-    public wSaisi() {
+    public wSaisi()
+    {
         initComponents();
+    }
+
+    public wSaisi(int dimension) {
+        initComponents();
+        
+        int nbColonnesInit = tableUtilisateur.getColumnCount(); 
+        int nbColonnesManquantes = dimension - nbColonnesInit; 
+        
+        for (int i= 0; i < nbColonnesManquantes; i++) 
+        {
+            tableUtilisateur.addColumn(new TableColumn());
+        }
+        
     }
 
     /** This method is called from within the constructor to
@@ -34,22 +49,22 @@ public class wSaisi extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableUtilisateur = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableUtilisateur.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableUtilisateur);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,7 +99,7 @@ public class wSaisi extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tableUtilisateur;
     // End of variables declaration//GEN-END:variables
 
 }
