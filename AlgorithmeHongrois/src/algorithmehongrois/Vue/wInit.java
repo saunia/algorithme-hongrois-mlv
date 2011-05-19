@@ -100,6 +100,7 @@ public class wInit extends javax.swing.JFrame {
           String sValue = jSpinner1.getValue().toString();
           int dimensions = Integer.parseInt(sValue); 
           wSaisi wsaisi = new wSaisi(dimensions);
+          wsaisi.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
