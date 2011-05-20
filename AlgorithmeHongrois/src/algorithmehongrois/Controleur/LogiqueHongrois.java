@@ -17,6 +17,8 @@ public class LogiqueHongrois
 
     private Integer[][] matrice;
     private Integer[][] matriceBuffer;
+    private Integer[] indicesColonnesBarrees;
+    private Integer[] indicesLignesBarrees;
     private int dimension;
 
 
