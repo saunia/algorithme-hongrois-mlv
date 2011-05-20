@@ -95,9 +95,12 @@ public class LogiqueHongrois
         ArrayList<Couple> solution = new ArrayList<Couple>();
         //TODO : inverserModeDécroissant
         reduireLignes();
-        afficheMatriceBuffer();
         reduireColonnes();
-        afficheMatriceBuffer();
+        while(!estOptimale()){
+            rayerLignesColonnes();
+            ajouterOuSoustraire();
+        }
+        trouverSolution();
         return null;
     }
 
@@ -138,6 +141,27 @@ public class LogiqueHongrois
         }
     }
 
+    public boolean estOptimale()
+    {
+        // Dahlia
+        return false;
+    }
+
+    public void trouverSolution()
+    {
+        // Dahlia
+    }
+
+    // Si c'est pas optimale
+    public void rayerLignesColonnes()
+    {
+        // Alban
+    }
+
+    public void ajouterOuSoustraire()
+    {
+        // Didier
+    }
 
     public void afficheMatrice(){
         for(int ligne = 0; ligne<dimension; ligne++){
