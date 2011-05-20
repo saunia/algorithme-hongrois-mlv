@@ -56,11 +56,27 @@ public class LogiqueHongrois
     {
         this.dimension = dim;
         this.matrice = new Integer[dimension][dimension];
+
+        
         for(int i=0; i<dimension; i++){
             for(int j=0; j<dimension; j++){
                 matrice[i][j] = i+j;
             }
         }
+
+        //copie la matrice dans une matrice buffer
+        this.matriceBuffer = new Integer[dim][dim];
+        for(int i=0; i < dim; i++){
+            this.matriceBuffer[i] = (Integer[]) matrice[i].clone();
+        }
+    }
+
+    public LogiqueHongrois(Integer[][] matrice)
+    {
+        this.matrice = matrice;
+
+        int dim = matrice.length; 
+        this.dimension = dim; 
 
         //copie la matrice dans une matrice buffer
         this.matriceBuffer = new Integer[dim][dim];
@@ -113,6 +129,7 @@ public class LogiqueHongrois
                     min = matriceBuffer[i][colonne];
                 }
             }
+            
             System.out.println("Colonne : " + colonne + " réduite de " + min);
             
             for(int ligne = 0; ligne<dimension; ligne++){

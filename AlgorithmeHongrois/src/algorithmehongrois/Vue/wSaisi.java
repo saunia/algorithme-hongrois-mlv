@@ -153,7 +153,17 @@ public class wSaisi extends javax.swing.JFrame {
 
         if(estRempli)
         {
-            System.out.println("Rempli !");
+            /* Création de la matrice utilisateur */
+            Integer[][] matrice = new Integer[dimension][dimension];
+
+            for (int i= 0; i < dimension; i++) {
+                for (int j= 0; j < dimension; j++) {
+                    matrice[i][j] = Integer.valueOf(tableUtilisateur.getValueAt(i, j).toString()); 
+                }
+            }
+
+            /* Affichage du résultat dans une nouvelle fenêtre */
+            wResultat wresultat = new wResultat(matrice); 
         }
         else
         {
