@@ -6,6 +6,7 @@
 package algorithmehongrois.Controleur;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTable;
 
 /**
@@ -143,15 +144,199 @@ public class LogiqueHongrois
         }
     }
 
+    /**
+     * Teste si la matrice buffer est optimale
+     * @return true si la matrice buffer est optimale
+     */
     public boolean estOptimale()
     {
-        // Dahlia
-        return false;
+        List<Integer> listIndicesI = new ArrayList<Integer>();
+        List<Integer> listIndicesJ = new ArrayList<Integer>();
+        boolean estOptimale = false;
+
+        for (int i= 0; i < this.dimension; i++) {
+            for (int j= 0; j < this.dimension; j++) {
+                if(this.matriceBuffer[i][j] == 0)
+                {
+                    if(!listIndicesI.contains(i))
+                    {
+                        listIndicesI.add(i);
+                    }
+
+                    if(!listIndicesJ.contains(j))
+                    {
+                        listIndicesJ.add(j);
+                    }
+                }
+            }
+        }
+
+        if(listIndicesI.size() == this.dimension && listIndicesJ.size() == this.dimension)
+            estOptimale = true;
+
+        return estOptimale;
     }
 
     public void trouverSolution()
     {
-        // Dahlia
+        Integer[][] matriceResultat = new Integer[this.dimension][this.dimension];
+
+        // Remplissage de la matrice avec que des zéros
+        for (int i= 0; i < this.dimension; i++) {
+            for (int j= 0; j < this.dimension; j++) {
+                matriceResultat[i][j] = 0;
+            }
+        }
+
+        // Trouver la ligne ou la colonne avec le moins de zéros possibles
+        int nbZeros = 0;
+        int nbZerosMini = this.dimension;
+        int numLigne = this.dimension;
+        int numColonne= this.dimension;
+
+        // Parcours ligne par ligne
+        for (int i= 0; i < this.dimension; i++) {
+            for (int j= 0; j < this.dimension; j++) {
+                if(this.matriceBuffer[i][j] == 0)
+                {
+                    ++nbZeros;
+                }
+            }
+
+            if(nbZerosMini > nbZeros)
+            {
+                nbZerosMini = nbZeros;
+                numLigne = i;
+            }
+
+            nbZeros = 0;
+        }
+
+        // Parcours colonne par colonne
+        if(nbZerosMini != 1) // Sinon, ligne trouvée
+        {
+            for (int i= 0; i < this.dimension; i++) {
+                for (int j= 0; j < this.dimension; j++) {
+                    if(this.matriceBuffer[j][i] == 0) // ATTENTION, variables inversées !!!
+                    {
+                        ++nbZeros;
+                    }
+                }
+
+                if(nbZerosMini > nbZeros)
+                {
+                    nbZerosMini = nbZeros;
+                    numColonne = i;
+                }
+
+                nbZeros = 0;
+            }
+        }
+
+        int colonneZero;
+
+        if(numColonne == this.dimension) // Si c'est une ligne qui est retenue
+        {
+            // Trouver la colonne où il y a un zéro
+            for (int i= 0; i < this.dimension; i++) {
+                if(this.matriceBuffer[numLigne][i] == 0)
+                {
+                    colonneZero = i;
+                    i = this.dimension; // Sortie du for i
+                }
+            }
+        }
+
+        /*
+        List<List<Couple>> listeCouplesPossibles = new ArrayList<List<Couple>>();
+        List<Couple> listCourante = new ArrayList<Couple>();
+        List<Couple> solution = new ArrayList<Couple>();
+
+        // On écrit tous les couples possibles
+        for (int i= 0; i < this.dimension; i++) {
+            for (int j= 0; j < this.dimension; j++) {
+                if(this.matriceBuffer[i][j] == 0)
+                {
+                    listCourante.add(new Couple(String.valueOf(i), String.valueOf(j)));
+                }
+            }
+
+            listeCouplesPossibles.add(listCourante);
+            listCourante.clear();
+        }
+
+        // Recherche de la liste la plus petite
+        int tailleListeMini = this.dimension;
+        int numListeMini = this.dimension;
+
+        for (int i= 0; i < listeCouplesPossibles.size(); i++) {
+            if(listeCouplesPossibles.get(i).size() < tailleListeMini)
+            {
+                tailleListeMini = listeCouplesPossibles.get(i).size();
+                numListeMini = i;
+            }
+        }
+
+        // On ajoute le premier élément de cette liste dans la solution
+        solution.add(listeCouplesPossibles.get(numListeMini).get(0));
+
+        // On supprime tous les couples possibles de cette ligne et de cette colonne
+
+        */
+
+        /*
+        int nbZeros = 0; 
+        int nbZerosMini = this.dimension; 
+        int numLigne = this.dimension;
+        int numColonne= this.dimension;
+        
+        // Trouver la ligne ou la colonne avec le moins de zéros possibles
+        // Parcours ligne par ligne
+        for (int i= 0; i < this.dimension; i++) {
+            for (int j= 0; j < this.dimension; j++) {
+                if(this.matriceBuffer[i][j] == 0)
+                {
+                    ++nbZeros;
+                }
+            }
+
+            if(nbZerosMini > nbZeros)
+            {
+                nbZerosMini = nbZeros;
+                numLigne = i;
+            }
+
+            nbZeros = 0; 
+        }
+        
+        // Parcours colonne par colonne
+        if(nbZerosMini != 1) // Sinon, ligne trouvée
+        {
+            for (int i= 0; i < this.dimension; i++) {
+                for (int j= 0; j < this.dimension; j++) {
+                    if(this.matriceBuffer[j][i] == 0) // ATTENTION, variables inversées !!!
+                    {
+                        ++nbZeros;
+                    }
+                }
+
+                if(nbZerosMini > nbZeros)
+                {
+                    nbZerosMini = nbZeros;
+                    numColonne = i;
+                }
+
+                nbZeros = 0;
+            }
+        }
+
+        if(numColonne == this.dimension) // Si c'est une ligne qui est retenue
+        {
+
+        }
+         *
+         *
+         */
     }
 
     // Si c'est pas optimale
