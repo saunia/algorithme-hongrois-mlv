@@ -28,7 +28,22 @@ public class Main {
 
         
         LogiqueHongrois algo = new LogiqueHongrois(3);
-        algo.trouverAffectationOptimale();
+        // algo.trouverAffectationOptimale();
+
+        int dim = 3;
+        Integer[][] matriceBuffer = new Integer[dim][dim];
+        matriceBuffer[0][0] = 0;
+        matriceBuffer[0][1] = 0;
+        matriceBuffer[0][2] = 1;
+        matriceBuffer[1][0] = 0;
+        matriceBuffer[1][1] = 1;
+        matriceBuffer[1][2] = 0;
+        matriceBuffer[2][0] = 1; // Si 0 alors c'est optimal
+        matriceBuffer[2][1] = 1;
+        matriceBuffer[2][2] = 1;
+
+        algo.setMatriceBuffer(matriceBuffer);
+        System.out.println(algo.estOptimale());
     }
 
 }

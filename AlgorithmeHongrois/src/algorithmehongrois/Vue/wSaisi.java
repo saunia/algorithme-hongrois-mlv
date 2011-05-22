@@ -37,13 +37,15 @@ public class wSaisi extends javax.swing.JFrame {
     public wSaisi(int dimension) {
         initComponents();
 
-        Object[][] lignes = new Object[dimension][dimension];
+        Integer[][] lignes = new Integer[dimension][dimension];
 
         String[] header = new String[dimension];
 
+        /*
         for (int i= 0; i < dimension; i++) {
             header[i] = "Colonne " + i;
         }
+        */
 
         tableUtilisateur.setModel(
             new DefaultTableModel(
