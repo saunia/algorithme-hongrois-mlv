@@ -103,8 +103,8 @@ public class LogiqueHongrois
             rayerLignesColonnes();
             ajouterOuSoustraire();
         }
-        trouverSolution();
-        return null;
+        solution = trouverSolution();
+        return solution;
     }
 
     private void reduireLignes(){
@@ -177,166 +177,36 @@ public class LogiqueHongrois
         return estOptimale;
     }
 
-    public void trouverSolution()
+    public ArrayList<Couple> trouverSolution()
     {
-        Integer[][] matriceResultat = new Integer[this.dimension][this.dimension];
+        int cpt = 0;
+        int numLigne;
 
-        // Remplissage de la matrice avec que des zéros
+        Integer[][] matrice = new Integer[this.dimension][this.dimension];
+
+        for(int i=0; i < this.dimension; i++){
+            matrice[i] = (Integer[]) this.matriceBuffer[i].clone();
+        }
+
+        while(cpt != this.dimension)
+        {
+            numLigne = ligneMinZeros(matrice);
+            matrice = barrerEncadrerZeros(numLigne, matrice);
+            ++cpt;
+        }
+
+        ArrayList<Couple> solution = enregistrerSolution(matrice);
+
         for (int i= 0; i < this.dimension; i++) {
             for (int j= 0; j < this.dimension; j++) {
-                matriceResultat[i][j] = 0;
+                System.out.print(matrice[i][j] + " ");
             }
+
+            System.out.print("\n");
+
         }
 
-        // Trouver la ligne ou la colonne avec le moins de zéros possibles
-        int nbZeros = 0;
-        int nbZerosMini = this.dimension;
-        int numLigne = this.dimension;
-        int numColonne= this.dimension;
-
-        // Parcours ligne par ligne
-        for (int i= 0; i < this.dimension; i++) {
-            for (int j= 0; j < this.dimension; j++) {
-                if(this.matriceBuffer[i][j] == 0)
-                {
-                    ++nbZeros;
-                }
-            }
-
-            if(nbZerosMini > nbZeros)
-            {
-                nbZerosMini = nbZeros;
-                numLigne = i;
-            }
-
-            nbZeros = 0;
-        }
-
-        // Parcours colonne par colonne
-        if(nbZerosMini != 1) // Sinon, ligne trouvée
-        {
-            for (int i= 0; i < this.dimension; i++) {
-                for (int j= 0; j < this.dimension; j++) {
-                    if(this.matriceBuffer[j][i] == 0) // ATTENTION, variables inversées !!!
-                    {
-                        ++nbZeros;
-                    }
-                }
-
-                if(nbZerosMini > nbZeros)
-                {
-                    nbZerosMini = nbZeros;
-                    numColonne = i;
-                }
-
-                nbZeros = 0;
-            }
-        }
-
-        int colonneZero;
-
-        if(numColonne == this.dimension) // Si c'est une ligne qui est retenue
-        {
-            // Trouver la colonne où il y a un zéro
-            for (int i= 0; i < this.dimension; i++) {
-                if(this.matriceBuffer[numLigne][i] == 0)
-                {
-                    colonneZero = i;
-                    i = this.dimension; // Sortie du for i
-                }
-            }
-        }
-
-        /*
-        List<List<Couple>> listeCouplesPossibles = new ArrayList<List<Couple>>();
-        List<Couple> listCourante = new ArrayList<Couple>();
-        List<Couple> solution = new ArrayList<Couple>();
-
-        // On écrit tous les couples possibles
-        for (int i= 0; i < this.dimension; i++) {
-            for (int j= 0; j < this.dimension; j++) {
-                if(this.matriceBuffer[i][j] == 0)
-                {
-                    listCourante.add(new Couple(String.valueOf(i), String.valueOf(j)));
-                }
-            }
-
-            listeCouplesPossibles.add(listCourante);
-            listCourante.clear();
-        }
-
-        // Recherche de la liste la plus petite
-        int tailleListeMini = this.dimension;
-        int numListeMini = this.dimension;
-
-        for (int i= 0; i < listeCouplesPossibles.size(); i++) {
-            if(listeCouplesPossibles.get(i).size() < tailleListeMini)
-            {
-                tailleListeMini = listeCouplesPossibles.get(i).size();
-                numListeMini = i;
-            }
-        }
-
-        // On ajoute le premier élément de cette liste dans la solution
-        solution.add(listeCouplesPossibles.get(numListeMini).get(0));
-
-        // On supprime tous les couples possibles de cette ligne et de cette colonne
-
-        */
-
-        /*
-        int nbZeros = 0; 
-        int nbZerosMini = this.dimension; 
-        int numLigne = this.dimension;
-        int numColonne= this.dimension;
-        
-        // Trouver la ligne ou la colonne avec le moins de zéros possibles
-        // Parcours ligne par ligne
-        for (int i= 0; i < this.dimension; i++) {
-            for (int j= 0; j < this.dimension; j++) {
-                if(this.matriceBuffer[i][j] == 0)
-                {
-                    ++nbZeros;
-                }
-            }
-
-            if(nbZerosMini > nbZeros)
-            {
-                nbZerosMini = nbZeros;
-                numLigne = i;
-            }
-
-            nbZeros = 0; 
-        }
-        
-        // Parcours colonne par colonne
-        if(nbZerosMini != 1) // Sinon, ligne trouvée
-        {
-            for (int i= 0; i < this.dimension; i++) {
-                for (int j= 0; j < this.dimension; j++) {
-                    if(this.matriceBuffer[j][i] == 0) // ATTENTION, variables inversées !!!
-                    {
-                        ++nbZeros;
-                    }
-                }
-
-                if(nbZerosMini > nbZeros)
-                {
-                    nbZerosMini = nbZeros;
-                    numColonne = i;
-                }
-
-                nbZeros = 0;
-            }
-        }
-
-        if(numColonne == this.dimension) // Si c'est une ligne qui est retenue
-        {
-
-        }
-         *
-         *
-         */
+        return solution;
     }
 
     // Si c'est pas optimale
@@ -366,6 +236,77 @@ public class LogiqueHongrois
             }
             System.out.print("\n");
         }
+    }
+
+    /**
+     * Retourne la ligne de la matrice ayant le moins de zéros
+     * @param matrice La matrice à tester
+     * @return Le numéro de la ligne
+     */
+    private int ligneMinZeros(Integer[][] matrice) {
+        int zeros = 0;
+        int nbZerosMin = this.dimension;
+        int numLigne = 0;
+
+        for (int i= 0; i < this.dimension; i++) {
+            for (int j= 0; j < this.dimension; j++) {
+                if(matrice[i][j] == 0)
+                {
+                    ++zeros;
+                }
+            }
+
+            if(nbZerosMin > zeros && zeros != 0)
+            {
+                nbZerosMin = zeros;
+                numLigne = i;
+            }
+
+            zeros = 0;
+        }
+
+        return numLigne;
+    }
+
+    /**
+     * Encadre les zéros et barre les zéros inutiles
+     * @param numLigne Ligne à traiter
+     * @param matrice Matrice à traiter
+     * @return La matrice modifiée
+     */
+    private Integer[][] barrerEncadrerZeros(int numLigne, Integer[][] matrice) {
+        for (int i= 0; i < this.dimension; i++) {
+            if(matrice[numLigne][i] == 0)
+            {
+                matrice[numLigne][i] = -1;
+
+                for (int j= 0; j < this.dimension; j++) {
+                    if(matrice[j][i] != -1)
+                        matrice[j][i] = -2;
+                }
+            }
+            else
+            {
+                matrice[numLigne][i] = -2;
+            }
+        }
+
+        return matrice;
+    }
+
+    private ArrayList<Couple> enregistrerSolution(Integer[][] matrice) {
+        ArrayList<Couple> solution = new ArrayList<Couple>();
+
+        for (int i= 0; i < this.dimension; i++) {
+            for (int j= 0; j < this.dimension; j++) {
+                if(matrice[i][j] == -1)
+                {
+                    solution.add(new Couple(String.valueOf(i), String.valueOf(j)));
+                }
+            }
+        }
+
+        return solution;
     }
 
 }
