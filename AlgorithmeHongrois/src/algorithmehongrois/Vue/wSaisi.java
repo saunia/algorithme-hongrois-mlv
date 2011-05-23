@@ -165,7 +165,8 @@ public class wSaisi extends javax.swing.JFrame {
             }
 
             /* Affichage du résultat dans une nouvelle fenêtre */
-            wResultat wresultat = new wResultat(matrice); 
+            wResultat wresultat = new wResultat(matrice);
+            wresultat.setVisible(true);
         }
         else
         {
