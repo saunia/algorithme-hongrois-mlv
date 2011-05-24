@@ -538,8 +538,10 @@ public class LogiqueHongrois
      * @return La matrice modifiée
      */
     private Integer[][] barrerEncadrerZeros(int numLigne, Integer[][] matrice) {
+        boolean estEncadre = false;
+
         for (int i= 0; i < this.dimension; i++) {
-            if(matrice[numLigne][i] == 0)
+            if(matrice[numLigne][i] == 0 && !estEncadre)
             {
                 matrice[numLigne][i] = -1;
 
@@ -547,6 +549,8 @@ public class LogiqueHongrois
                     if(matrice[j][i] != -1)
                         matrice[j][i] = -2;
                 }
+
+                estEncadre = true; 
             }
             else
             {
