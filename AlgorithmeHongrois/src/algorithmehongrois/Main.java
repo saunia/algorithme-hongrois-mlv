@@ -31,6 +31,8 @@ public class Main {
         // algo.trouverAffectationOptimale();
 
         int dim = 3;
+
+        /*
         Integer[][] matriceBuffer = new Integer[dim][dim];
         matriceBuffer[0][0] = 0;
         matriceBuffer[0][1] = 0;
@@ -42,11 +44,28 @@ public class Main {
         matriceBuffer[2][1] = 0;
         matriceBuffer[2][2] = 1;
 
+         *
+         */
+
+        Integer[][] matriceBuffer = new Integer[dim][dim];
+        matriceBuffer[0][0] = 0;
+        matriceBuffer[0][1] = 0;
+        matriceBuffer[0][2] = 2;
+        matriceBuffer[1][0] = 0;
+        matriceBuffer[1][1] = 3;
+        matriceBuffer[1][2] = 1;
+        matriceBuffer[2][0] = 1; // Si 0 alors c'est optimal
+        matriceBuffer[2][1] = 0;
+        matriceBuffer[2][2] = 1;
+
+
         algo.setMatriceBuffer(matriceBuffer);
         System.out.println(algo.estOptimale());
 
         // algo.trouverSolution();
-        algo.trouverAffectationOptimale(); 
+        algo.trouverAffectationOptimale();
+
+        // algo.marquerLignesColonnes();
     }
 
 }
