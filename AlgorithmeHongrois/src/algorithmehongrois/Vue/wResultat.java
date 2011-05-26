@@ -31,7 +31,11 @@ public class wResultat extends javax.swing.JFrame {
 
         jTextArea1.setLineWrap(true); 
 
-        LogiqueHongrois logique = new LogiqueHongrois(matrice, preference);
+        Integer[][] m = new Integer[matrice.length][matrice.length];
+
+        m = matrice;
+
+        LogiqueHongrois logique = new LogiqueHongrois(m, preference);
         ArrayList<Couple> solution = new ArrayList<Couple>();
         solution = logique.trouverAffectationOptimale();
 
