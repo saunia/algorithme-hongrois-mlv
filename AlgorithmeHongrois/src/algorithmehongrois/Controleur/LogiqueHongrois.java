@@ -115,15 +115,6 @@ public class LogiqueHongrois
         reduireLignes();
         reduireColonnes();
 
-        System.out.println("APRES REDUCTION");
-
-        for (int i= 0; i < dimension; i++) {
-            for (int j= 0; j < dimension; j++) {
-                System.out.print(matriceBuffer[i][j] + " ");
-            }
-            System.out.print("\n");
-        }
-
         while(!estOptimale()){
             marquerLignesColonnes();
             ajouterOuSoustraire();
@@ -142,7 +133,6 @@ public class LogiqueHongrois
                     min = matriceBuffer[ligne][i];
                 }
             }
-            System.out.println("Ligne : " + ligne + " réduite de " + min);
 
             for(int colonne = 0; colonne<dimension; colonne++){
                 matriceBuffer[ligne][colonne] -= min;
@@ -161,8 +151,6 @@ public class LogiqueHongrois
                 }
             }
             
-            System.out.println("Colonne : " + colonne + " réduite de " + min);
-            
             for(int ligne = 0; ligne<dimension; ligne++){
                 matriceBuffer[ligne][colonne] -= min;
             }
@@ -175,8 +163,6 @@ public class LogiqueHongrois
      */
     public boolean estOptimale()
     {
-        System.out.println("OPTIMALE !");
-
         List<Integer> listIndicesI = new ArrayList<Integer>();
         List<Integer> listIndicesJ = new ArrayList<Integer>();
         boolean estOptimale = false;
@@ -201,7 +187,6 @@ public class LogiqueHongrois
         if(listIndicesI.size() == this.dimension && listIndicesJ.size() == this.dimension)
             estOptimale = true;
 
-        System.out.println("OPTI" + estOptimale);
         return estOptimale;
     }
 
@@ -225,48 +210,12 @@ public class LogiqueHongrois
 
         ArrayList<Couple> solution = enregistrerSolution(matrice);
 
-        System.out.println("SOLUTION");
-
-        for (int i= 0; i < this.dimension; i++) {
-            for (int j= 0; j < this.dimension; j++) {
-                System.out.print(matrice[i][j] + " ");
-            }
-
-            System.out.print("\n");
-
-        }
-
         return solution;
     }
 
     // Si c'est pas optimale
     public void marquerLignesColonnes()
     {
-
-        System.out.print("MARQUER !");
-
-        /*this.indicesColonnesBarrees=null;//Init nécessaire? Purge !
-        this.indicesLignesBarrees=null;//Init nécessaire? Purge !
-        int cpt=0;
-
-        //Travail sur la matrice courante (matrice)
-
-        //Parcours lignes (i=lignes)
-        for (int i=0;i<dimension;i++) //Inf ou égal selon l'architecture de la matrice
-        {
-            //Parcours colonnes (j=colonnes)
-            for(int j=0;j<dimension;j++) //Inf ou égal selon l'architecture de la matrice
-                //if(this.matriceBuffer[i][j]==0) EN CAS DE CHANGEMENT!
-                if (this.matriceBuffer[i][j]==0)
-                {
-                    //stockage de l'indice dans le tableau d'indice lignes
-                    this.indicesLignesBarrees[cpt]=i;
-                    //stockage de l'indice dans le tableau d'indice colonnes
-                    this.indicesColonnesBarrees[cpt]=j;
-                    //Incrémentation du compteur d'indexation pour les tableaux contenant les indices des 0 la matrice
-                    cpt++;
-                }
-        }*/
         Integer[][] temp=matriceBuffer;
         boolean ligne=true;
         boolean firstTime=true;
@@ -278,6 +227,7 @@ public class LogiqueHongrois
         {
             tabNbZeroLigne=new int[dimension];
             tabNbZeroColonne=new int[dimension];
+
             //comptage zero des lignes
             for(int i=0;i<dimension;i++)
             {
@@ -359,29 +309,6 @@ public class LogiqueHongrois
         }
 
         matriceBuffer = temp;
-
-        // TEST
-        System.out.println("TEST !");
-
-        for (int i= 0; i < temp.length; i++) {
-            for (int j= 0; j < temp.length; j++) {
-                System.out.print(temp[i][j] + " ");
-            }
-            System.out.print("\n");
-
-        }
-
-        System.out.println("Lignes : ");
-        for (int i= 0; i < indicesLignesBarrees.length; i++) {
-            System.out.println(String.valueOf(indicesLignesBarrees[i]) + " ");
-
-        }
-
-        System.out.println("\nColonnes : ");
-        for (int i = 0; i < indicesColonnesBarrees.length; i++) {
-            System.out.println(String.valueOf(indicesColonnesBarrees[i]) + " ");
-
-        }
     }
     
     public Integer[][] rayer(boolean ligne,int indiceBarre, Integer temp[][])
