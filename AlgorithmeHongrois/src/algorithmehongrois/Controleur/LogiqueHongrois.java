@@ -25,7 +25,6 @@ public class LogiqueHongrois
     private int cptColonne=0;
 
 
-
     public int getDimension() {
         return dimension;
     }
@@ -58,7 +57,7 @@ public class LogiqueHongrois
         dimension=0;
     }
 
-    public LogiqueHongrois(int dim)
+    public LogiqueHongrois(int dim, boolean preference)
     {
         this.dimension = dim;
         this.matrice = new Integer[dimension][dimension];
@@ -77,10 +76,12 @@ public class LogiqueHongrois
         }
 
         indicesColonnesBarrees = new Integer[dim];
-        indicesLignesBarrees = new Integer[dim]; 
+        indicesLignesBarrees = new Integer[dim];
+
+
     }
 
-    public LogiqueHongrois(Integer[][] matrice)
+    public LogiqueHongrois(Integer[][] matrice, boolean preference)
     {
         this.matrice = matrice;
 
@@ -88,10 +89,18 @@ public class LogiqueHongrois
         this.dimension = dim; 
 
         //copie la matrice dans une matrice buffer
-        this.matriceBuffer = new Integer[dim][dim];
+        this.matriceBuffer = new Integer[dim][dim];        
         for(int i=0; i < dim; i++){
             this.matriceBuffer[i] = (Integer[]) matrice[i].clone();
         }
+
+        //si la preference est croissante on passe la matrice en preference decroissante
+        if(preference){
+            ordreDecroissant();
+        }
+
+        indicesColonnesBarrees = new Integer[dim];
+        indicesLignesBarrees = new Integer[dim];
     }
 
     /**
@@ -576,4 +585,51 @@ public class LogiqueHongrois
         return solution;
     }
 
+     /**
+     * Transforme matrice par ordre de préférence croissant en ordre de préférence décroissant
+     */
+    public void ordreDecroissant(){
+        int min = valMin(this.matriceBuffer);
+        int max = valMax(this.matriceBuffer);
+        for(int i=0; i<dimension; i++){
+            for(int j=0; j<dimension; j++){
+                matriceBuffer[i][j] = (matriceBuffer[i][j] - (max + min)) * (-1);
+            }
+        }
+
+    }
+
+    /**
+     * Retourne la valeur minimale d'une matrice
+     * @param matrice
+     * @return
+     */
+    public int valMin(Integer[][] matrice){
+        int min = matrice[0][0];
+        for(int i=0; i<dimension; i++){
+            for(int j=0; j<dimension; j++){
+                if(matrice[i][j]<min){
+                    min = matrice[i][j];
+                }
+            }
+        }
+        return min;
+    }
+
+    /**
+     * Retourne la valeur maximale d'une matrice
+     * @param matrice
+     * @return
+     */
+    public int valMax(Integer[][] matrice){
+        int max = matrice[0][0];
+        for(int i=0; i<dimension; i++){
+            for(int j=0; j<dimension; j++){
+                if(matrice[i][j]>max){
+                    max = matrice[i][j];
+                }
+            }
+        }
+        return max;
+    }
 }

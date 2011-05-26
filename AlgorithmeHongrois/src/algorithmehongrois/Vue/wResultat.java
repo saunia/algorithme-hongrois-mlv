@@ -26,12 +26,12 @@ public class wResultat extends javax.swing.JFrame {
         initComponents();
     }
 
-    public wResultat(Integer[][] matrice) {
+    public wResultat(Integer[][] matrice, boolean preference) {
         initComponents();
 
         jTextArea1.setLineWrap(true); 
 
-        LogiqueHongrois logique = new LogiqueHongrois(matrice);
+        LogiqueHongrois logique = new LogiqueHongrois(matrice, preference);
         ArrayList<Couple> solution = new ArrayList<Couple>();
         solution = logique.trouverAffectationOptimale();
 
